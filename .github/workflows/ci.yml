@@ -1,0 +1,55 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
+  workflow_dispatch:
+
+env:
+  GODOT_URL: https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot 4.7.1 (headless-capable editor binary)
+        run: |
+          curl -fsSL -o godot.zip "$GODOT_URL"
+          unzip -q godot.zip
+          sudo mv Godot_v4.7.1-stable_linux.x86_64 /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+          godot --version
+      - name: Run SceneTree tests
+        run: |
+          for p in template sdk games/boreal; do
+            echo "::group::$p"
+            bash scripts/run_tests.sh "$p"
+            echo "::endgroup::"
+          done
+
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot + weston + mesa (llvmpipe)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y weston mesa-vulkan-drivers vulkan-tools unzip
+          curl -fsSL -o godot.zip "$GODOT_URL"
+          unzip -q godot.zip
+          sudo mv Godot_v4.7.1-stable_linux.x86_64 /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+      - name: Assert llvmpipe software Vulkan present
+        run: vulkaninfo --summary | grep -qi llvmpipe
+      - name: Render screenshots (weston headless + lavapipe)
+        run: |
+          mkdir -p shots
+          for p in template games/boreal; do
+            name=$(echo "$p" | tr / _)
+            bash scripts/render_shot.sh "$p" "shots/$name.png"
+            test $(stat -c%s "shots/$name.png") -gt 1024 || { echo "PNG too small: $name"; exit 1; }
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: shots/*.png

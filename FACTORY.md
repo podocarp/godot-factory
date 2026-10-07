@@ -54,6 +54,7 @@ monorepo with `games/` — default: monorepo `podocarp/godot-factory`. Never com
 ## Current status
 - [x] Headless render path validated (weston + lavapipe + wayland/vulkan; see docs/rendering.md)
 - [x] `flake.nix` pins nixpkgs @ godot 4.7.1; `scripts/` harness verified against `template/`
-- [ ] Starter prefab library (camera rigs, FPS/TPS controllers, interaction, inventory, UI kit)
-- [ ] Boreal port v1 (see docs/boreal-analysis.md for scope)
+- [x] Starter prefab library (`sdk/`: cameras, FPS/TPS players, interaction, inventory, HUD, dialogue, level-builder JSON→.tscn; 5/5 tests)
+- [x] Boreal port phase 1 (pure sim + terrain, golden-value tests vs TS, 4/4 tests)
+- [ ] Boreal port phase 2 (3D world with real assets, gameplay loop, HUD, rescue ending)
 - [ ] CI (GitHub Actions: run_tests.sh + render_shot.sh on ubuntu-latest + llvmpipe)

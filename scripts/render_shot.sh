@@ -13,6 +13,11 @@ set -euo pipefail
 
 PROJ="${1:?usage: render_shot.sh <project-dir> <out.png> [opts]}"; shift
 OUT="${1:?usage: render_shot.sh <project-dir> <out.png> [opts]}"; shift
+# Absolute paths: Godot resolves relative save paths against the PROJECT dir, not the
+# caller's cwd — a relative OUT would silently land inside the project.
+PROJ=$(cd "$PROJ" && pwd)
+OUT=$(realpath -m "$OUT")
+[[ "$OUT" == /* ]] || { echo "ERROR: OUT must resolve to an absolute path" >&2; exit 2; }
 
 SCENE=""; WIDTH=640; HEIGHT=360; TIMEOUT=180
 while [[ $# -gt 0 ]]; do
@@ -28,11 +33,13 @@ done
 
 ICD="${MESA_ICD:-${VK_DRIVER_FILES:-}}"
 if [[ -z "$ICD" ]]; then
-  ICD=$(ls /nix/store/*-mesa-*/share/vulkan/icd.d/lvp_icd.x86_64.json 2>/dev/null | head -1 || true)
+  ICD=$(ls /nix/store/*-mesa-*/share/vulkan/icd.d/lvp_icd.x86_64.json /usr/share/vulkan/icd.d/lvp_icd*.json 2>/dev/null | head -1 || true)  # NixOS + Debian/Ubuntu (CI)
 fi
 [[ -n "$ICD" && -f "$ICD" ]] || { echo "ERROR: lavapipe ICD not found (set MESA_ICD)" >&2; exit 1; }
 
 RUNTIME=$(mktemp -d /tmp/weston-factory.XXXXXX); chmod 700 "$RUNTIME"
+# Fresh clones need the import pass for class_name globals to resolve (see run_tests.sh).
+godot --headless --path "$PROJ" --import --quit >/dev/null 2>&1 || true
 export XDG_RUNTIME_DIR="$RUNTIME"   # weston creates its socket under $XDG_RUNTIME_DIR
 SOCKET="wl-factory-$$"
 cleanup() { [[ -n "${WPID:-}" ]] && kill "$WPID" 2>/dev/null || true; rm -rf "$RUNTIME"; }
