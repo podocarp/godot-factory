@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://prefabs/pickup.gd" id="1_qu871"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ohekw"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_34wy6"]
+albedo_color = Color(1, 0.8, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ptwoo"]
+material = SubResource("StandardMaterial3D_34wy6")
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="Pickup" type="StaticBody3D" unique_id=710398908]
+script = ExtResource("1_qu871")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1771794666]
+shape = SubResource("BoxShape3D_ohekw")
+
+[node name="Visual" type="MeshInstance3D" parent="." unique_id=1953959679]
+mesh = SubResource("BoxMesh_ptwoo")

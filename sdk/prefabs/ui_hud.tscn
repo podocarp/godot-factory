@@ -1,0 +1,50 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://prefabs/ui_hud.gd" id="1_x2y8l"]
+
+[node name="UiHud" type="Control" unique_id=71426743]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_x2y8l")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=780353483]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 16)
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 16.0
+max_value = 1.0
+show_percentage = false
+metadata/test_id = "health_bar"
+
+[node name="QuestList" type="VBoxContainer" parent="." unique_id=271256800]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 16.0
+offset_bottom = 48.0
+metadata/test_id = "quest_list"
+
+[node name="ToastLabel" type="Label" parent="." unique_id=556148157]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 300.0
+offset_right = 16.0
+offset_bottom = 300.0
+metadata/test_id = "toast_label"
+
+[node name="Crosshair" type="Label" parent="." unique_id=1960575560]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/test_id = "crosshair"

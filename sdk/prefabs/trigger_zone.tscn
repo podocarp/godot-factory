@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://prefabs/trigger_zone.gd" id="1_takkm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_40uhf"]
+size = Vector3(4, 3, 4)
+
+[node name="TriggerZone" type="Area3D" unique_id=1607392259]
+script = ExtResource("1_takkm")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=960767676]
+shape = SubResource("BoxShape3D_40uhf")

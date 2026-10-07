@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://prefabs/inventory.gd" id="1_m3lv8"]
+
+[node name="Inventory" type="Node" unique_id=1349757517]
+script = ExtResource("1_m3lv8")

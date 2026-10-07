@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://prefabs/interaction_system.gd" id="1_qptii"]
+
+[node name="InteractionSystem" type="Node" unique_id=390277499]
+script = ExtResource("1_qptii")

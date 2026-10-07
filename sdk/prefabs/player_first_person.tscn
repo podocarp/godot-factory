@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://prefabs/player_mover.gd" id="1_rsluc"]
+[ext_resource type="Script" path="res://prefabs/camera_first_person.gd" id="2_po4ik"]
+[ext_resource type="Script" path="res://prefabs/inventory.gd" id="3_c2iej"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rx3qt"]
+radius = 0.4
+height = 1.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6th0x"]
+albedo_color = Color(0.4, 0.6, 0.9, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sw6l6"]
+material = SubResource("StandardMaterial3D_6th0x")
+radius = 0.4
+height = 1.7
+
+[node name="PlayerFirstPerson" type="CharacterBody3D" unique_id=441232363]
+script = ExtResource("1_rsluc")
+camera_pivot_path = NodePath("CameraFirstPerson")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1966365714]
+shape = SubResource("CapsuleShape3D_rx3qt")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="." unique_id=804466345]
+mesh = SubResource("CapsuleMesh_sw6l6")
+
+[node name="CameraFirstPerson" type="Camera3D" parent="." unique_id=421980846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+current = true
+script = ExtResource("2_po4ik")
+
+[node name="Inventory" type="Node" parent="." unique_id=2064911407]
+script = ExtResource("3_c2iej")

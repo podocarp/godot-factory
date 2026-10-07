@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://prefabs/player_mover.gd" id="1_vg2v5"]
+[ext_resource type="Script" path="res://prefabs/camera_third_person.gd" id="2_gi4gy"]
+[ext_resource type="Script" path="res://prefabs/inventory.gd" id="3_fk8ua"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3u8ew"]
+radius = 0.4
+height = 1.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1tkai"]
+albedo_color = Color(0.4, 0.6, 0.9, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kg6h2"]
+material = SubResource("StandardMaterial3D_1tkai")
+radius = 0.4
+height = 1.7
+
+[node name="PlayerThirdPerson" type="CharacterBody3D" unique_id=919876352]
+script = ExtResource("1_vg2v5")
+camera_pivot_path = NodePath("CameraThirdPerson")
+
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=221550923]
+shape = SubResource("CapsuleShape3D_3u8ew")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="." unique_id=1004637]
+mesh = SubResource("CapsuleMesh_kg6h2")
+
+[node name="CameraThirdPerson" type="SpringArm3D" parent="." unique_id=1571931240]
+spring_length = 4.0
+margin = 0.2
+script = ExtResource("2_gi4gy")
+target_path = NodePath("..")
+
+[node name="Camera" type="Camera3D" parent="CameraThirdPerson" unique_id=840080652]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="Inventory" type="Node" parent="." unique_id=464485726]
+script = ExtResource("3_fk8ua")

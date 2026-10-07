@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://prefabs/camera_third_person.gd" id="1_wptda"]
+
+[node name="CameraThirdPerson" type="SpringArm3D" unique_id=1643094673]
+spring_length = 4.0
+margin = 0.2
+script = ExtResource("1_wptda")
+
+[node name="Camera" type="Camera3D" parent="." unique_id=1401342283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)

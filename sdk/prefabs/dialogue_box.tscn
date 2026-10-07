@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://prefabs/dialogue_box.gd" id="1_f06kx"]
+
+[node name="DialogueBox" type="Control" unique_id=824368887]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -160.0
+script = ExtResource("1_f06kx")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1200015760]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Column" type="VBoxContainer" parent="Panel" unique_id=200878121]
+layout_mode = 2
+
+[node name="SpeakerLabel" type="Label" parent="Panel/Column" unique_id=1864157701]
+unique_name_in_owner = true
+layout_mode = 2
+metadata/test_id = "speaker"
+
+[node name="TextLabel" type="Label" parent="Panel/Column" unique_id=809100273]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+metadata/test_id = "text"
+
+[node name="ChoiceList" type="VBoxContainer" parent="Panel/Column" unique_id=1689661504]
+unique_name_in_owner = true
+layout_mode = 2
+metadata/test_id = "choice_list"
