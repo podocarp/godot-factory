@@ -25,12 +25,13 @@ screenshots for visual checkpoints. Host: GPU-less NixOS VM; engine pinned in `f
 
 ## Commands
 ```bash
-nix develop                            # pinned toolchain (godot 4.7.1, weston, mesa, gh) — optional; host already has these
-bash scripts/run_tests.sh <proj>       # all <proj>/tests/test_*.gd headless, nonzero exit = fail
+bash scripts/run_tests.sh <proj>       # all <proj>/tests/test_*.gd headless; auto-runs import pass first
 bash scripts/render_shot.sh <proj> <out.png> [--scene res://x.tscn] [--width N] [--height N]
-godot --headless --path <proj> --import --quit          # asset import pass (run after adding assets)
+godot --headless --path <proj> --import --quit          # asset import pass (also run automatically by both scripts)
 godot --headless --path <proj> --check-only --script res://some.gd   # parse check
 ```
+Test contract: a `test_*.gd` that prints no `PASS` line FAILS (no silent passes). `OUT` in
+render_shot.sh is resolved against the CALLER's cwd (absolute paths recommended).
 
 ## Project layout
 - `template/` — copy this to start a game. Has a passing smoke test (code-authored scene
