@@ -21,7 +21,7 @@ jobs:
           godot --version
       - name: Run SceneTree tests
         run: |
-          for p in template sdk games/boreal; do
+          for p in template sdk tools/terrain-gen games/boreal; do
             echo "::group::$p"
             bash scripts/run_tests.sh "$p"
             echo "::endgroup::"
