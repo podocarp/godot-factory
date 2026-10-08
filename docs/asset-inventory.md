@@ -2,14 +2,34 @@
 
 Audited 2026-10-08 by direct directory listing and glTF/GLB JSON parsing (triangle counts
 are actual index-buffer counts from sampled models, not estimates).
+Updated 2026-10-08: library naming standard adopted (see below); two itch.io packs added
+(Modern Interiors, Music Loop Bundle); all directories renamed to the standard.
+
+## Library standard (applies to every pack here)
+
+- **Directory name:** `<Pack>_<Author>` — CamelCase, no spaces, no brackets, no version
+  numbers (versions change; the pack identity doesn't). Examples:
+  `StylizedNatureMegaKit_Quaternius`, `MusicLoopBundle_Tallbeard`.
+- **`SOURCE.txt` in every pack root** (provenance manifest): source URL, fetch date,
+  itch rating, tags, license pointer, and the full upstream file list with what was
+  fetched vs skipped. Written automatically by the `itch-asset-fetch` skill's
+  `itch.py get`; hand-written for manually-added packs.
+- **Keep the upstream license file** (`License.txt` / `_LICENSE.txt`) where it is; never
+  delete it. If a pack ships no license file, add one to `SOURCE.txt` quoting the page.
+- **Extracted archives:** keep the original `.zip` next to the extracted tree only if
+  under ~50 MB; otherwise extract and drop the zip (the SOURCE.txt file list preserves
+  what the zip contained).
+- **Adding a pack:** prefer the `itch-asset-fetch` skill (search → info → vision-check
+  the cover → `get --name <Pack>_<Author> --extract`), then add a section to this doc.
 
 **Global facts (verified):**
 - **No pack is a Godot project** — zero `project.godot`, zero `.tscn` anywhere. All packs are
   raw DCC exports (FBX / glTF / OBJ). Nothing needs "open in editor once"; everything is
   copy-into-`res://` and let Godot import.
 - **No `.blend` files anywhere** — no Blender dependency.
-- **No audio files anywhere** (0 × .ogg/.wav/.mp3 across all packs). SFX/music must come from
-  elsewhere (e.g. Kenney, freesound CC0) for every game.
+- **Audio: covered as of 2026-10-08** — `MusicLoopBundle_Tallbeard` adds 334 seamless OGG
+  music loops (CC0). SFX are still missing (no .ogg/.wav/.mp3 SFX anywhere); Kenney audio
+  or freesound CC0 remain the route for those.
 - **No rigged animations** — the only skinned mesh found (Universal Base Characters) has
   `animations: 0`. Any game needing character animation must supply its own rig/animations
   (e.g. mixamo-retargeted or Quaternius SOURCE pack, which we don't have).
@@ -24,7 +44,7 @@ are actual index-buffer counts from sampled models, not estimates).
 
 ---
 
-## 1. Cooking Assets (MilkAndBanana)
+## 1. CookingAssets_MilkAndBanana (MilkAndBanana)
 
 - **Contents:** 231 unique cooking props (appliances, pans, knives, boards, bowls, plates,
   cups, utensils, gadgets, chopsticks…) in two parallel trees: `GLB/<Category>/*.glb`
@@ -37,7 +57,7 @@ are actual index-buffer counts from sampled models, not estimates).
 - **License:** CC0 (MilkAndBanana, itch.io). Credit optional.
 - **Size on disk:** 25 MB.
 
-## 2. Free_Pond_Kit_AssetQuest (Asset Quest)
+## 2. PondKit_AssetQuest (Asset Quest)
 
 - **Contents:** 89 FBX meshes — pond basins (Pond_1–4), rocks/pebbles (many moss variants),
   cattails, grass patches, mini plants, branches, plus small creatures (frog, bird, dragonfly
@@ -53,7 +73,7 @@ are actual index-buffer counts from sampled models, not estimates).
 - **License:** CC0 (Asset Quest). Credit optional.
 - **Size:** 8.7 MB (mostly the 9 MB TGA).
 
-## 3. KayKit_Furniture_Bits_1.0_FREE (Kay Lousberg)
+## 3. KayKitFurnitureBits_KayLousberg (Kay Lousberg)
 
 - **Contents:** 53 furniture props (beds, chairs, couches, cabinets, lamps, rugs, picture
   frames, pillows, plants, books…) in `Assets/`:
@@ -67,7 +87,7 @@ are actual index-buffer counts from sampled models, not estimates).
 - **License:** CC0. Credit optional.
 - **Size:** 6.7 MB.
 
-## 4. Stylized Nature MegaKit [Standard] (Quaternius)
+## 4. StylizedNatureMegaKit_Quaternius (Quaternius)
 
 - **The boreal workhorse.** 68 models (of 116 in PRO — free tier is partial, stated in license
   file). In `glTF/` (68 × `.gltf+.bin`, textures as sidecar PNGs in the same dir), plus `FBX/`,
@@ -87,7 +107,7 @@ are actual index-buffer counts from sampled models, not estimates).
   project with the stylized shader — we don't have it; the free glTFs import fine without it).
 - **Size:** 111 MB (FBX/OBJ duplicates are most of it; the glTF subset is small).
 
-## 5. Universal Base Characters [Standard] (Quaternius)
+## 5. UniversalBaseCharacters_Quaternius (Quaternius)
 
 - **Contents:** 2 rigged base characters — **Superhero_Male_FullBody, Superhero_Female_FullBody**
   — in `Base Characters/Godot - UE/` (glTF+bin, **for Godot/UE scale**) and `Unity/` (FBX).
@@ -102,6 +122,34 @@ are actual index-buffer counts from sampled models, not estimates).
   `Textures/Normals Unity - Godot/` (OpenGL +Y convention) if re-wiring materials.
 - **License:** CC0, Standard = partial (SOURCE paid adds .blend rigs + Godot project).
 - **Size:** 126 MB.
+
+## 6. ModernInteriors_LimeZu (LimeZu)
+
+- **Contents:** free tier of the Modern Interiors RPG tileset — 16×16 top-down interior
+  tiles: furniture, floors/walls, characters (idle/run/sit animations as sprite sheets),
+  `free_overview.png` preview. `Modern tiles_Free/` tree, PNG spritesheets + tilesets.
+- **Formats:** 2D PNG only (not a 3D pack). Godot: import as-is; spritesheets need manual
+  region setup or AnimatedSprite2D frames.
+- **Style:** cozy Stardew-like pixel interiors, warm muted palette. Vision-checked cover
+  suggests effective detail closer to 32×32 than strict 16×16 — verify grid before use.
+- **Rating:** 4.9★ (609) on itch. **License: NON-COMMERCIAL ONLY** — `LICENSE.txt` allows
+  use/edit in non-commercial projects, forbids commercial use and reselling. Fine for
+  jams/prototypes; buy the paid tier before shipping any commercial game with it.
+- **Size:** 2.9 MB. `SOURCE.txt` present.
+
+## 7. MusicLoopBundle_Tallbeard (Abstraction Music / Tallbeard Studios)
+
+- **Contents:** 334 seamless music loops, OGG only, flat in pack root, grouped by name
+  prefix (Interior Birdecorator, Dani Maccari, Ludum Dare 28, chiptune set, quarterly
+  drops 2024–2026). `_LICENSE.txt` + `_README.txt` in root.
+- **Formats:** `.ogg` — use OGG, not MP3 (readme: MP3 framing breaks seamless loops;
+  Godot's loop points on OGG work correctly).
+- **Style:** broad — ambient, chiptune, upbeat, orchestral-ish; covers most genres.
+- **Rating:** 4.9★ (325) on itch. **License:** CC0 (public domain) with a non-endorsement
+  note: author asks against NFT/ML-training/unmodified-resale use (not license
+  restrictions, but respect it).
+- **Size:** 1.4 GB extracted (zips dropped per library standard; full file list in
+  `SOURCE.txt`). Song-browser/troubadeck player apps were skipped — music only.
 
 ---
 
@@ -122,7 +170,8 @@ are actual index-buffer counts from sampled models, not estimates).
 | Camp/shelter furniture | ✅ | KayKit Furniture Bits (beds, crates→cabinets, lamps, rugs — cabin interior) |
 | Cooking/crafting props | ✅ strong | Cooking Assets, 231 props (pots, knives, boards, stove…) — fits survival crafting UI/props perfectly |
 | Water (thaw ponds) | ✅ | Pond kit basins + water material |
-| Audio (all of it) | ❌ missing | Zero audio files in shared assets |
+| Audio (music) | ✅ (as of 2026-10-08) | MusicLoopBundle_Tallbeard — 334 CC0 OGG loops (ambient/chiptune/upbeat) |
+| Audio (SFX) | ❌ missing | Still no SFX anywhere; Kenney/freesound CC0 needed |
 
 **Verdict:** Stylized Nature + Cooking + KayKit + UBC give a coherent Quaternius/KayKit-adjacent
 stylized look and cover ~60% of boreal's visual needs (flora, rocks, props, character).
@@ -131,9 +180,13 @@ snow material approach, aurora sky, all audio, and character animation clips.
 
 ## License / redistribution (GitHub publication)
 
-- **All five packs: CC0 1.0 Universal** — public-domain dedication, verified by reading
-  `License.txt` / `License_Standard.txt` in each. Commercial use, modification, redistribution
-  on GitHub: **allowed, no attribution required** (all authors ask for optional credit).
+- **Packs 1–5 + 7 (Music Loop Bundle): CC0 1.0 Universal** — public-domain dedication,
+  verified by reading `License.txt` / `License_Standard.txt` / `_LICENSE.txt` in each.
+  Commercial use, modification, redistribution on GitHub: **allowed, no attribution
+  required** (all authors ask for optional credit).
+- **Pack 6 (ModernInteriors_LimeZu) is NOT CC0 and NOT commercial-safe** — free tier is
+  **non-commercial use only** per its `LICENSE.txt`. Do not ship it in a commercial game
+  or a public repo that implies commercial intent without checking the paid tier.
 - Recommended repo hygiene: keep each pack's original `License.txt` next to the copied subset
   in `game/assets/<pack>/`, and add a one-paragraph credits section to the game README
   (MilkAndBanana, Asset Quest, Kay Lousberg / KayKit, @Quaternius). Costs nothing, avoids
