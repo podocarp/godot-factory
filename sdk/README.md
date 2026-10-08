@@ -30,6 +30,10 @@ bash scripts/run_tests.sh sdk
 | `EntityRegistry` (Node) | id -> Node lookup; `register(node, id)` renames the node to the id (stable addressing); entries are weak refs, freed entities vanish. |
 | `EventBus` (RefCounted) | Typed global signals via `EventBus.bus()`: `item_picked_up`, `interacted`, `trigger_fired`, `quest_updated`, `inventory_changed`. No string signal names. Call `EventBus.reset()` at the end of `--script` tests. |
 | `SimDriver` (Node) | Fixed-step clock: `ticked(tick, dt)` at `tick_rate` (60 Hz), seeded `rng`, `simulate(seconds)` for tests, `reset(seed)` for replays. Add to group `sim_driver`. |
+| `Inspect` | Semantic snapshots (memo §5): `Inspect.snapshot(tree.root, opts)` → `{tick, nodes:[{path,type,id,state}], events:[...]}`; node state from a `snapshot()` method if present, else curated props. `opts`: `group`/`type`/`id_prefix` selectors, `max_nodes` cap (+`truncated` flag). `record_events()` logs EventBus signals into snapshots. |
+| `SnapshotDiff` | `diff(a, b)` → `{added, removed, changed:[{path,key,old,new}], new_events}` — compact deltas for the observe→repair loop; `is_empty(d)` gate. |
+| `UiQuery` | UI automation tree (memo §6): `query(root[, test_id])` → `{test_id, role, visible, enabled, text, rect}`; `click_by_test_id(root, id)` emits `pressed` without mouse coords (refuses hidden/disabled/missing). |
+| `SdkVersion` | `VERSION` const ("0.1.0"), mirrors `sdk/VERSION`; `scripts/check_vendor.sh <game>` byte-checks vendored copies against sdk/. |
 
 ## Prefabs (`prefabs/*.tscn`)
 

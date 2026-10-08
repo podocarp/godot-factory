@@ -29,6 +29,8 @@ bash scripts/run_tests.sh <proj>       # all <proj>/tests/test_*.gd headless; au
 bash scripts/render_shot.sh <proj> <out.png> [--scene res://x.tscn] [--width N] [--height N]
 godot --headless --path <proj> --import --quit          # asset import pass (also run automatically by both scripts)
 godot --headless --path <proj> --check-only --script res://some.gd   # parse check
+bash scripts/check_vendor.sh <game-dir>   # byte-match <game-dir>/vendor/sdk/ vs sdk/ sources (exit 1 on DRIFT)
+bash scripts/sandbox.sh [<proj-dir>] -- <cmd...>  # run untrusted project cmd in bwrap (no net, clean env, caps; docs/sandboxing.md)
 ```
 Test contract: a `test_*.gd` that prints no `PASS` line FAILS (no silent passes). `OUT` in
 render_shot.sh is resolved against the CALLER's cwd (absolute paths recommended).
